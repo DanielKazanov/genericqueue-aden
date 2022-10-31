@@ -28,6 +28,84 @@ public class GenericQueue<E> {
 	 * 7) E element()
 	 * 8) E peek()
 	 */
+	
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+	
+	public int size() {
+		return queue.size();
+	}
+	
+	public boolean add(E o) {
+		if (size() == MAX_QUEUE_SIZE) {
+			throw new IllegalStateException();
+		}
+		
+		queue.add(o);
+		
+		if (queue.get(size() - 1) != o) {
+			throw new IllegalStateException();
+		}
+		return true;
+	}
+	
+	public boolean offer(E o) {
+		if (size() == MAX_QUEUE_SIZE) {
+			return false;
+		}
+		
+		queue.add(o);
+		
+		if (queue.get(size() - 1) != o) {
+			return false;
+		}
+		return true;
+	}
+	
+	public E remove() {
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		
+		E head = queue.get(0);
+		queue.remove(0);
+		
+		if (queue.peek() == head) {
+			throw new NoSuchElementException();
+		}
+		
+		return head;
+	}
+	
+	public E poll() {
+		if (isEmpty()) {
+			return null;
+		}
+		
+		E head = queue.get(0);
+		queue.remove(0);
+		
+		if (queue.peek() == head) {
+			return null;
+		}
+		
+		return head;
+	}
+	
+	public E element() {
+		if (isEmpty()) {
+			throw new NoSuchElementException();
+		}
+		return queue.get(0);
+	}
+	
+	public E peek() {
+		if (isEmpty()) {
+			return null;
+		}
+		return queue.get(0);
+	}
 
         // Do NOT TOUCH THIS!!
 	@Override

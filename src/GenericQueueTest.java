@@ -197,7 +197,26 @@ class GenericQueueTest {
 	@Test
 	@Order(6)
 	void test_nonDefaultConstructor() {
-		fail();
+		GenericQueue<Integer> q = new GenericQueue<>(25);
+		int[] data = new int[25];
+		Arrays.setAll(data,i->25-i); // initialize array to the numbers 25 to 1
+		for (int d : data) {
+			assertTrue(q.add(d));
+			assertFalse(q.isEmpty());
+		}
+		
+		String dataStr = String.join(",",Arrays.toString(data));
+		dataStr = dataStr.replaceAll("\\s+","");
+		String match = "queue: "+dataStr;
+		assertTrue(match.equals(q.toString()));
+		assertTrue(q.size() == data.length);
+		
+		assertFalse(q.offer(-1));
+		// make sure that the queue was not changed....
+		assertTrue(match.equals(q.toString()));
+		assertTrue(q.size() == data.length);
+		
+//		fail();
 	}
 
 	/**
